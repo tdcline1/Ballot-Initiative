@@ -7,6 +7,8 @@ from utils import (
     logger,
 )
 
+config = {"BASE_THRESHOLD": 85, "TOP_CROP": 0.385, "BOTTOM_CROP": 0.725}
+
 
 @dataclass
 class OpenAiConfig:
