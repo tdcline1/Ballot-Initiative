@@ -21,7 +21,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useMatchRoute } from "@tanstack/react-router";
+import { useLocation, useMatchRoute } from "@tanstack/react-router";
 // Menu items.
 const items = [
   {
@@ -31,7 +31,7 @@ const items = [
   },
   {
     title: "Petition Validation",
-    url: "petition",
+    url: "/petition",
     icon: FileCheck,
   },
 ];
@@ -85,8 +85,8 @@ const instructions = [
 
 export function AppSidebar() {
   const { state } = useSidebar();
-  const matchRoute = useMatchRoute();
-  const isPetitionRoute = matchRoute({ to: "/petition" });
+  const location = useLocation();
+  console.log(location.pathname);
 
   return (
     <Sidebar collapsible="icon">
@@ -94,12 +94,15 @@ export function AppSidebar() {
         <SidebarTrigger />
       </SidebarHeader>
       <SidebarContent className="hover:overflow-y-visible overflow-hidden [&::-webkit-scrollbar-track]:bg-black-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar]:w-2 h-full">
-        <SidebarGroup>
+        <SidebarGroup className="border-b dark:border-gray-500 border-black">
           <SidebarGroupLabel>Ballot Initiative</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className={`${location.pathname === item.url ? "bg-gray-200 dark:bg-gray-800 rounded-sm" : ""}`}
+                >
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
@@ -111,10 +114,10 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        {state === "expanded" && isPetitionRoute && (
-          <SidebarGroup className="border-t dark:border-gray-500 border-black text-left p-5">
-            <h1 className="mb-5">📝 Instructions</h1>
+        <SidebarGroup className="text-left p-5">
+          {state === "expanded" && location.pathname === "/petition" && (
             <Accordion type="single" collapsible>
+              <h1 className="mb-5">📝 Instructions</h1>
               {instructions.map((instruction) => (
                 <AccordionItem
                   key={instruction.title}
@@ -126,8 +129,14 @@ export function AppSidebar() {
                 </AccordionItem>
               ))}
             </Accordion>
-          </SidebarGroup>
-        )}
+          )}
+          {state === "expanded" && location.pathname === "/" && (
+            <div className="p-5 bg-green-200 text-black rounded-sm">
+              👆Visit the Petition Validation page to get started.
+            </div>
+          )}
+        </SidebarGroup>
+        {}
       </SidebarContent>
       <SidebarFooter className="flex flex-row">
         <SidebarMenuItem key="Settings">
