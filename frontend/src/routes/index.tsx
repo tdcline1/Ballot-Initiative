@@ -48,11 +48,12 @@ function Index() {
 # Welcome to the Ballot Initiative Project! 👋
 This project aims to
 
-> Provide a cheap, quick, and accurate way to validate signed petitions for local ballot measures
-
+<blockquote class="pl-4 border-l-4 border-solid border-black dark:border-white">
+    Provide a cheap, quick, and accurate way to validate signed petitions for local ballot measures
+</blockquote>
 It does this by performing [OCR](https://en.wikipedia.org/wiki/Optical_character_recognition) on the signatures, matching the results against official voter records, and providing a score for each signature.
 
-<figure class="text-center mb-5">
+<figure class="text-center my-5">
         <img src="ballot_initiative_schematic.png" alt="Ballot Initiative Schematic" />
         <figcaption class="text-black dark:text-white"><em>Core process for validating signatures</em></figcaption>
 </figure>
