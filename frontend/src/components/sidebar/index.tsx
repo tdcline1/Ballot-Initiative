@@ -87,7 +87,7 @@ export function AppSidebar() {
       <SidebarHeader>
         <SidebarTrigger />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="overflow-auto [&::-webkit-scrollbar-track]:bg-black-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar]:w-2">
         <SidebarGroup>
           <SidebarGroupLabel>Ballot Initiative</SidebarGroupLabel>
           <SidebarGroupContent>
