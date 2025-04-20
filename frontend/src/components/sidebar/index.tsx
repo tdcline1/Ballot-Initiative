@@ -1,4 +1,4 @@
-import { Home, Settings, FileCheck } from "lucide-react";
+import { FileCheck, Home, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -20,6 +20,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useMatchRoute } from "@tanstack/react-router";
 // Menu items.
 const items = [
   {
@@ -82,12 +84,16 @@ const instructions = [
 ];
 
 export function AppSidebar() {
+  const { state } = useSidebar();
+  const matchRoute = useMatchRoute();
+  const isPetitionRoute = matchRoute({ to: "/petition" });
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarTrigger />
       </SidebarHeader>
-      <SidebarContent className="overflow-auto [&::-webkit-scrollbar-track]:bg-black-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar]:w-2">
+      <SidebarContent className="hover:overflow-y-visible overflow-hidden [&::-webkit-scrollbar-track]:bg-black-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar]:w-2 h-full">
         <SidebarGroup>
           <SidebarGroupLabel>Ballot Initiative</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -105,21 +111,23 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup className="border-t dark:border-white border-black text-left">
-          <p className="mb-5">📝 Instructions</p>
-          <Accordion type="single" collapsible className="p-4">
-            {instructions.map((instruction) => (
-              <AccordionItem
-                key={instruction.title}
-                value={instruction.title}
-                className="mb-5 dark:border-white border-black"
-              >
-                <AccordionTrigger>{instruction.title}</AccordionTrigger>
-                <AccordionContent>{instruction.content}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </SidebarGroup>
+        {state === "expanded" && isPetitionRoute && (
+          <SidebarGroup className="border-t dark:border-gray-500 border-black text-left p-5">
+            <h1 className="mb-5">📝 Instructions</h1>
+            <Accordion type="single" collapsible>
+              {instructions.map((instruction) => (
+                <AccordionItem
+                  key={instruction.title}
+                  value={instruction.title}
+                  className="px-4 mb-5 dark:border-gray-500 border-black border-1 rounded-sm"
+                >
+                  <AccordionTrigger>{instruction.title}</AccordionTrigger>
+                  <AccordionContent>{instruction.content}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter className="flex flex-row">
         <SidebarMenuItem key="Settings">
