@@ -8,31 +8,13 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="p-2 mb-8 text-left">
+    <div className="mb-8 text-left">
       <Markdown
         rehypePlugins={[rehypeRaw]}
         components={{
           a(props) {
             const { node, ...rest } = props;
             return <a className="text-blue-400 underline" {...rest}></a>;
-          },
-          h1(props) {
-            const { node, ...rest } = props;
-            return (
-              <h1
-                className="text-3xl font-bold text-gray-900 dark:text-white"
-                {...rest}
-              ></h1>
-            );
-          },
-          h3(props) {
-            const { node, ...rest } = props;
-            return (
-              <h2
-                className="text-xl font-bold text-gray-900 dark:text-white"
-                {...rest}
-              ></h2>
-            );
           },
           li(props) {
             const { node, ...rest } = props;

@@ -11,7 +11,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 
 import {
@@ -21,9 +20,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useSidebar } from "@/components/ui/sidebar";
-import { Link, useLocation, useMatchRoute } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 // Menu items.
-const items = [
+export const items = [
   {
     title: "Home",
     url: "/",
@@ -86,16 +85,14 @@ const instructions = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
-  console.log(location.pathname);
 
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <SidebarTrigger />
+        <SidebarGroupLabel>Ballot Initiative</SidebarGroupLabel>
       </SidebarHeader>
-      <SidebarContent className="hover:overflow-y-visible overflow-hidden [&::-webkit-scrollbar-track]:bg-black-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar]:w-2 h-full">
+      <SidebarContent className="[overflow:overlay] [&::-webkit-scrollbar-track]:bg-black-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar]:w-2 h-full">
         <SidebarGroup className="border-b dark:border-gray-500 border-black">
-          <SidebarGroupLabel>Ballot Initiative</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
