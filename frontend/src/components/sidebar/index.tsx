@@ -131,7 +131,7 @@ export function AppSidebar() {
             </Accordion>
           )}
           {state === "expanded" && location.pathname === "/" && (
-            <div className="p-5 bg-green-200 text-black rounded-sm">
+            <div className="p-5 bg-green-400/30 text-white rounded-sm">
               👆Visit the Petition Validation page to get started.
             </div>
           )}
