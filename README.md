@@ -81,25 +81,25 @@ An alternate approach to get up and running is to use [Github Codespaces](https:
 
 1. Clone the repository[^2]:
 
-```bash
-git clone https://github.com/Civic-Tech-Ballot-Inititiave/Ballot-Initiative.git
-cd ballot-initiative
-```
+   ```bash
+   git clone https://github.com/Civic-Tech-Ballot-Inititiave/Ballot-Initiative.git
+   cd ballot-initiative
+   ```
 
-[^2]: Optionally you may want to [fork this repository](https://github.com/Civic-Tech-Ballot-Inititiave/Ballot-Initiative/fork)
+   [^2]: Optionally you may want to [fork this repository](https://github.com/Civic-Tech-Ballot-Inititiave/Ballot-Initiative/fork)
 
 2. Create and activate a virtual environment:
 
-```bash
-# Initalise project and install dependencies
-uv sync --all-extras --dev
+   ```bash
+   # Initalise project and install dependencies
+   uv sync --all-extras --dev
 
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-```
+   # Activate virtual environment
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
 
 3. Configure and save settings:
    - Make a copy of the `settings.example.toml` file and rename it to `settings.toml`.
@@ -110,9 +110,9 @@ source venv/bin/activate
 
 1. Start the Streamlit app:
 
-```bash
-uv run main.py
-```
+   ```bash
+   uv run main.py
+   ```
 
 2. Upload your files:
    - PDF of signed petitions
@@ -125,9 +125,19 @@ uv run main.py
 2. Activate the virtual environment
 3. Run the following command:
 
-```bash
-uv run pytest
-```
+   ```bash
+   uv run pytest
+   ```
+
+### Running API
+
+1. Navigate to the project root folder
+2. Activate the virtual environment
+3. Run the following command:
+
+   ```bash
+   uv run fastapi dev app/api.py
+   ```
 
 ## Project Documentation
 
