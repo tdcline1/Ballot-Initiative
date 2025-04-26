@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { FileInput } from "@/components/ui/fileinput";
 import { Label } from "@/components/ui/label";
+import { useClearFiles } from "@/hooks/useClearFiles";
+import { useOCR } from "@/hooks/useOCR";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import Markdown from "react-markdown";
 
 export const Route = createFileRoute("/petition")({
@@ -9,6 +12,19 @@ export const Route = createFileRoute("/petition")({
 });
 
 function Petition() {
+  const [processing, setProcessing] = useState(false);
+  const clearFiles = useClearFiles();
+  const OCR = useOCR();
+
+  const handleClearFiles = () => {
+    setProcessing(true);
+    clearFiles.mutate();
+  };
+
+  const handleProcessFiles = () => {
+    OCR.mutate();
+  };
+
   return (
     <div className="mb-8 text-left">
       <h1 className="text-3xl">Petition Validation</h1>
@@ -46,15 +62,23 @@ Ensure these sections have the printed name and address of the voter.
       <div className="border-gray-600 border-t-2 my-5">
         <h3>Process Files</h3>
         <div className="text-center">
-          <Button variant="destructive" className="w-1/2">
-            🚀 Process Files
+          <Button
+            variant="destructive"
+            className="w-1/2"
+            onClick={handleProcessFiles}
+          >
+            {OCR.isPending ? <>Processing</> : <>🚀 Process Files</>}
           </Button>
         </div>
       </div>
       <div className="border-gray-600 border-t-2 my-5">
         <h3>Maintenance</h3>
         <div className="text-center">
-          <Button variant={"outline"} className="w-1/2">
+          <Button
+            variant={"outline"}
+            className="w-1/2 border-black dark:border-white"
+            onClick={handleClearFiles}
+          >
             🗑️ Clear All Files
           </Button>
         </div>

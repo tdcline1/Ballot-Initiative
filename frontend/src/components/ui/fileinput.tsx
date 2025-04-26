@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { useUploadFile } from "@/hooks/useUploadFile";
 import { CloudUpload } from "lucide-react";
@@ -31,7 +30,7 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
       <div className="items-center justify-center w-full mb-2">
         <label
           htmlFor={id}
-          className="flex  justify-center h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          className="flex justify-center h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
         >
           <div className="flex flex-col items-center justify-center">
             <CloudUpload />
@@ -49,14 +48,13 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
             className="hidden"
             onChange={handleFileChange}
             accept={accept}
-            multiple
           />
         </label>
       </div>
 
-      {!uploadClicked && (
+      {!mutation.isSuccess && (
         <Button
-          className="mb-2"
+          className="mb-2 items-center justify-center w-full"
           onClick={handleUpload}
           disabled={mutation.isPending || !file}
         >
@@ -69,11 +67,13 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
           {mutation.isPending ? (
             <div className="rounded bg-yellow-400/50 p-2">Uploading...</div>
           ) : (
-            <div className="rounded bg-green-600/80 p-2">
+            <div className="rounded">
               {mutation.isSuccess && file !== undefined ? (
-                <>✅ {file.name} loaded successfully!</>
+                <div className="rounded bg-green-600/80 p-2">
+                  ✅ {file.name} loaded successfully!
+                </div>
               ) : (
-                <div className="rounded bg-red-600/80">Error Uploading</div>
+                <div className="rounded bg-red-600/80 p-2">Error Uploading</div>
               )}
             </div>
           )}

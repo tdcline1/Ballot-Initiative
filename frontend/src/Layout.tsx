@@ -4,6 +4,7 @@ import { ModeToggle } from "./components/theme-provider/mode-toggle";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { useLocation } from "@tanstack/react-router";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function Layout({ children }: { children?: React.ReactNode }) {
   const location = useLocation();
@@ -16,8 +17,10 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
           <SidebarTrigger /> | {""}
           {items.find((item) => item.url === location.pathname)?.title}
         </header>
+
         {children}
         <ModeToggle />
+        <Toaster />
         <footer>
           <Markdown
             rehypePlugins={[rehypeRaw]}
