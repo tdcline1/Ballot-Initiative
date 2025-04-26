@@ -17,7 +17,7 @@ function Petition() {
       </p>
       <div className="border-blue-600 border-t-2 my-5" />
       <Markdown>### Upload Files</Markdown>
-      <div className="grid grid-cols-2 grid-rows-2 grid-flow-col gap-4">
+      <div className="grid grid-cols-2 grid-flow-col gap-4 grid-rows-[min-content_1fr]">
         <div>
           <Markdown>{`
 #### 📄 Voter Records
@@ -29,7 +29,7 @@ Required columns: \`First_Name\`, \`Last_Name\`, \`Street_Number\`,
         </div>
         <div className="row-span-1">
           <Label htmlFor="voter-records">Choose CSV file:</Label>
-          <FileInput id="voter-records" />
+          <FileInput id="voter_records" accept=".csv" />
         </div>
         <div>
           <Markdown>{`
@@ -40,7 +40,7 @@ Ensure these sections have the printed name and address of the voter.
         </div>
         <div className="row-span-1">
           <Label htmlFor="petition-signatures">Choose PDF file:</Label>
-          <FileInput id="petition-signatures" />
+          <FileInput id="petition_signatures" accept=".pdf" />
         </div>
       </div>
       <div className="border-gray-600 border-t-2 my-5">
