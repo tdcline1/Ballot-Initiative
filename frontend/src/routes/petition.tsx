@@ -1,10 +1,11 @@
+import DataFrameTable from "@/components/DataFrameTable/dataframetable";
 import { Button } from "@/components/ui/button";
 import { FileInput } from "@/components/ui/fileinput";
 import { Label } from "@/components/ui/label";
-import { useClearFiles } from "@/hooks/useClearFiles";
-import { useOCR } from "@/hooks/useOCR";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useClearFiles } from "@/hooks/petition/useClearFiles";
+import { useOCR } from "@/hooks/petition/useOCR";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import Markdown from "react-markdown";
 
 export const Route = createFileRoute("/petition")({
@@ -12,12 +13,10 @@ export const Route = createFileRoute("/petition")({
 });
 
 function Petition() {
-  const [processing, setProcessing] = useState(false);
   const clearFiles = useClearFiles();
   const OCR = useOCR();
 
   const handleClearFiles = () => {
-    setProcessing(true);
     clearFiles.mutate();
   };
 
@@ -66,10 +65,27 @@ Ensure these sections have the printed name and address of the voter.
             variant="destructive"
             className="w-1/2"
             onClick={handleProcessFiles}
+            disabled={OCR.isPending}
           >
             {OCR.isPending ? <>Processing</> : <>🚀 Process Files</>}
           </Button>
         </div>
+      </div>
+
+      <div className="border-gray-600 border-t-2 my-5">
+        <h3>Results</h3>
+        <Tabs defaultValue="datatable" className="w-[400px]">
+          <TabsList>
+            <TabsTrigger value="datatable">📊 Data Table</TabsTrigger>
+            <TabsTrigger value="statistics">📈 Statistics</TabsTrigger>
+          </TabsList>
+          <TabsContent value="datatable">
+            <DataFrameTable data={OCR.data ? OCR.data.data : {}} />
+          </TabsContent>
+          <TabsContent value="statistics">
+            add statistics component here.
+          </TabsContent>
+        </Tabs>
       </div>
       <div className="border-gray-600 border-t-2 my-5">
         <h3>Maintenance</h3>

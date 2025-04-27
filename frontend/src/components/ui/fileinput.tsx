@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { Button } from "./button";
-import { useUploadFile } from "@/hooks/useUploadFile";
+import { useUploadFile } from "@/hooks/petition/useUploadFile";
 import { CloudUpload } from "lucide-react";
 
 function FileInput({ ...props }: React.ComponentProps<"input">) {
-  const [file, setFile] = React.useState<File>();
+  const [file, setFile] = React.useState<File | null>(null);
   const [uploadClicked, setUploadClicked] = React.useState(false);
 
   const mutation = useUploadFile();
@@ -23,6 +23,7 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
     if (!id) return;
     mutation.mutate({ file, filetype: id });
     setUploadClicked(true);
+    setFile(null);
   };
 
   return (
@@ -52,7 +53,7 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
         </label>
       </div>
 
-      {!mutation.isSuccess && (
+      {file && (
         <Button
           className="mb-2 items-center justify-center w-full"
           onClick={handleUpload}
@@ -70,7 +71,7 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
             <div className="rounded">
               {mutation.isSuccess && file !== undefined ? (
                 <div className="rounded bg-green-600/80 p-2">
-                  ✅ {file.name} loaded successfully!
+                  ✅ {mutation.data.filename} loaded successfully!
                 </div>
               ) : (
                 <div className="rounded bg-red-600/80 p-2">Error Uploading</div>

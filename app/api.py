@@ -2,15 +2,14 @@ import os
 import time
 
 from fastapi import FastAPI, Request, Response
-from sse_starlette import EventSourceResponse
-from sh import tail
-
+from fastapi.middleware.cors import CORSMiddleware
 from fuzzy_match_helper import create_ocr_matched_df, create_select_voter_records
 from ocr_helper import create_ocr_df, log_filename
-from settings.settings_repo import config
-from utils import logger
 from routers import file
-from fastapi.middleware.cors import CORSMiddleware
+from settings.settings_repo import config
+from sh import tail
+from sse_starlette.sse import EventSourceResponse
+from utils import logger
 
 app = FastAPI(root_path="/api")
 app.state.voter_records_df = None
@@ -61,28 +60,6 @@ def ocr(response: Response):
         select_voter_records, 
         threshold=config['BASE_THRESHOLD']
     )
-    response.headers['Content-Disposition'] = 'attachment; filename=ocr_matched.csv'
-    response.headers['Content-Type'] = 'text/csv'
-    return ocr_matched_df.to_csv()
+    response.headers['Content-Type'] = 'application/json'
+    return {'data': ocr_matched_df.to_dict(orient='records'), 'stats': {}}
 
-
-
-# @app.get("/ocr", tags=["OCR"])
-# async def stream_logs(request: Request):
-#     """
-#     Streams the logs for the OCR process.
-#     """
-#     log_file_path = f'logs/{log_filename}'
-#     if not os.path.exists(log_file_path):
-#         return Response(f"Log file {log_filename} not found.", media_type="text/plain")
-    
-#     async def logGenerator(request):
-#         for line in tail("-f", log_file_path, _iter=True):
-#             if await request.is_disconnected():
-#                 print("client disconnected!!!")
-#                 break
-#             yield line
-#             time.sleep(0.5)
-#     event_generator = logGenerator(request)
-
-#     return EventSourceResponse(event_generator)
