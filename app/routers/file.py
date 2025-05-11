@@ -9,10 +9,11 @@ from utils import logger
 
 router = APIRouter(tags=["File Upload"])
 
+
 class UploadFileTypes(str, Enum):
     voter_records = "voter_records"
     petition_signatures = "petition_signatures"
-    
+
 
 @router.delete("/clear")
 def clear_all_files(request: Request):
@@ -20,15 +21,18 @@ def clear_all_files(request: Request):
     Delete all files
     """
     request.state.voter_records_df = None
-    if os.path.exists('temp/ballot.pdf'):
-        os.remove('temp/ballot.pdf')
+    if os.path.exists("temp/ballot.pdf"):
+        os.remove("temp/ballot.pdf")
         logger.info("Deleted all files")
     else:
         logger.warning("No files to delete")
     return {"message": "All files deleted"}
 
+
 @router.post("/upload/{filetype}")
-def upload_file(filetype: UploadFileTypes, file: UploadFile, response: Response, request: Request):
+def upload_file(
+    filetype: UploadFileTypes, file: UploadFile, response: Response, request: Request
+):
     """Uploads file to the server and saves it to a temporary directory.
 
     Args:
@@ -42,7 +46,7 @@ def upload_file(filetype: UploadFileTypes, file: UploadFile, response: Response,
             if not file.filename.endswith(".pdf"):
                 response.status_code = 400
                 return {"error": "Invalid file type. Only pdf files are allowed."}
-            with open(os.path.join('temp', 'ballot.pdf'), "wb") as buffer:
+            with open(os.path.join("temp", "ballot.pdf"), "wb") as buffer:
                 buffer.write(file.file.read())
                 logger.info("File saved to temporary directory: temp/ballot.pdf")
         case UploadFileTypes.voter_records:
@@ -54,21 +58,34 @@ def upload_file(filetype: UploadFileTypes, file: UploadFile, response: Response,
             df = pd.read_csv(buffer, dtype=str)
 
             # Create necessary columns
-            df['Full Name'] = df["First_Name"] + ' ' + df['Last_Name']
-            df['Full Address'] = df["Street_Number"] + " " + df["Street_Name"] + " " + \
-                                    df["Street_Type"] + " " + df["Street_Dir_Suffix"]
+            df["Full Name"] = df["First_Name"] + " " + df["Last_Name"]
+            df["Full Address"] = (
+                df["Street_Number"]
+                + " "
+                + df["Street_Name"]
+                + " "
+                + df["Street_Type"]
+                + " "
+                + df["Street_Dir_Suffix"]
+            )
 
-            required_columns = ["First_Name", "Last_Name", "Street_Number", 
-                             "Street_Name", "Street_Type", "Street_Dir_Suffix"]
+            required_columns = [
+                "First_Name",
+                "Last_Name",
+                "Street_Number",
+                "Street_Name",
+                "Street_Type",
+                "Street_Dir_Suffix",
+            ]
             request.app.state.voter_records_df = df
-            
+
             # Verify required columns
             if not all(col in df.columns for col in required_columns):
                 response.status_code = 400
                 return {"error": "Missing required columns in voter records file."}
 
-
     return {"filename": file.filename}
+
 
 @router.get("/upload/{filetype}")
 def get_uploaded_file(filetype: UploadFileTypes, request: Request):
@@ -82,9 +99,9 @@ def get_uploaded_file(filetype: UploadFileTypes, request: Request):
     # Validate file type
     match filetype:
         case UploadFileTypes.petition_signatures:
-            if not os.path.exists('temp/ballot.pdf'):
+            if not os.path.exists("temp/ballot.pdf"):
                 return {"error": "No PDF file found for petition signatures"}
-            return FileResponse('temp/ballot.pdf')
+            return FileResponse("temp/ballot.pdf")
         case UploadFileTypes.voter_records:
             if request.app.state.voter_records_df is None:
                 return {"error": "No voter records file found"}

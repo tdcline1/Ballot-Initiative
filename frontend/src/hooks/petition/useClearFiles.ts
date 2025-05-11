@@ -5,7 +5,7 @@ import { axios } from '@/hooks/axios'
 export const useClearFiles = () => {
     return useMutation({
         mutationFn: async () => {
-            await axios.delete(`/api/clear`)
+            await axios.delete(`/clear`)
             toast.success('Files cleared successfully', { description: 'All files have been removed.' })
         },
         onError: (error: any) => {

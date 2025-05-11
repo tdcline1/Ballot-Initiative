@@ -1,14 +1,11 @@
 import os
-import time
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fuzzy_match_helper import create_ocr_matched_df, create_select_voter_records
-from ocr_helper import create_ocr_df, log_filename
+from ocr_helper import create_ocr_df
 from routers import file
 from settings.settings_repo import config
-from sh import tail
-from sse_starlette.sse import EventSourceResponse
 from utils import logger
 
 app = FastAPI(root_path="/api")
@@ -29,12 +26,13 @@ app.add_middleware(
 
 app.include_router(file.router)
 
+
 @app.post("/ocr", tags=["OCR"])
 def ocr(response: Response):
     """
     Triggers the OCR process on the uploaded petition signatures PDF file.
     """
-    if not os.path.exists('temp/ballot.pdf'):
+    if not os.path.exists("temp/ballot.pdf"):
         logger.error("No PDF file found for petition signatures")
         response.status_code = 400
         return {"error": "No PDF file found for petition signatures"}
@@ -45,21 +43,17 @@ def ocr(response: Response):
     logger.info("Starting OCR processing...")
     # Process files if in processing state
     logger.info("Converting PDF to images...")
-    
-    ocr_df = create_ocr_df(filedir='temp', 
-                            filename='ballot.pdf')
-    
+
+    ocr_df = create_ocr_df(filedir="temp", filename="ballot.pdf")
+
     logger.info("Compiling Voter Record Data...")
 
     select_voter_records = create_select_voter_records(app.state.voter_records_df)
-    
+
     logger.info("Matching petition signatures to voter records...")
 
     ocr_matched_df = create_ocr_matched_df(
-        ocr_df, 
-        select_voter_records, 
-        threshold=config['BASE_THRESHOLD']
+        ocr_df, select_voter_records, threshold=config["BASE_THRESHOLD"]
     )
-    response.headers['Content-Type'] = 'application/json'
-    return {'data': ocr_matched_df.to_dict(orient='records'), 'stats': {}}
-
+    response.headers["Content-Type"] = "application/json"
+    return {"data": ocr_matched_df.to_dict(orient="records"), "stats": {}}

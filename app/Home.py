@@ -20,7 +20,11 @@ st.markdown(
     """
 )
 
-st.image("app/ballot_initiative_schematic.png", caption="Core process for validating signatures", use_container_width=True)
+st.image(
+    "app/ballot_initiative_schematic.png",
+    caption="Core process for validating signatures",
+    use_container_width=True,
+)
 
 st.markdown(
     """    
@@ -47,6 +51,6 @@ st.markdown(
     "© 2025 Ballot Initiative Project | "
     # "<a href='#'>Privacy Policy</a> | "
     "<a href='https://github.com/Civic-Tech-Ballot-Inititiave/Ballot-Initiative/blob/main/LICENSE.md'>Terms of Use</a>"
-    "</div>", 
-    unsafe_allow_html=True
+    "</div>",
+    unsafe_allow_html=True,
 )
