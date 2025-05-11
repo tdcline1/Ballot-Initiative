@@ -187,7 +187,7 @@ def collect_ocr_data(
     for i in tqdm(range(0, total_pages, batch_size)):
         batch = encoded_images[i : i + batch_size]
         logger.info(
-            f"Processing batch {i//batch_size + 1} of {(total_pages + batch_size - 1)//batch_size}"
+            f"Processing batch {i // batch_size + 1} of {(total_pages + batch_size - 1) // batch_size}"
         )
 
         if st_bar:
@@ -208,7 +208,7 @@ def collect_ocr_data(
             full_data.extend(ocr_data)
 
         logger.info(
-            f"Batch {i//batch_size + 1} complete. Processed {len(batch_results)} pages"
+            f"Batch {i // batch_size + 1} complete. Processed {len(batch_results)} pages"
         )
 
     logger.info(f"OCR collection complete. Total entries: {len(full_data)}")
