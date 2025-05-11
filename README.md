@@ -122,8 +122,7 @@ An alternate approach to get up and running is to use [Github Codespaces](https:
 ### Running Project Tests
 
 1. Navigate to the project root folder
-2. Activate the virtual environment
-3. Run the following command:
+2. Run the following command:
 
    ```bash
    uv run pytest
@@ -132,8 +131,7 @@ An alternate approach to get up and running is to use [Github Codespaces](https:
 ### Running API
 
 1. Navigate to the project root folder
-2. Activate the virtual environment
-3. Run the following command:
+2. Run the following command:
 
    ```bash
    uv run fastapi dev app/api.py
