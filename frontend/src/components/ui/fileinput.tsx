@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { Button } from "./button";
 import { useUploadFile } from "@/hooks/petition/useUploadFile";
-import { CloudUpload } from "lucide-react";
+import { filesize } from "filesize";
+import { CloudUpload, File, X } from "lucide-react";
+import { Button } from "./button";
 
 function FileInput({ ...props }: React.ComponentProps<"input">) {
   const [file, setFile] = React.useState<File | null>(null);
@@ -13,6 +14,7 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
   const { id, accept } = props;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.files);
     if (event.target.files && event.target.files[0]) {
       setFile(event.target.files[0]);
     }
@@ -54,17 +56,33 @@ function FileInput({ ...props }: React.ComponentProps<"input">) {
       </div>
 
       {file && (
-        <Button
-          className="mb-2 items-center justify-center w-full"
-          onClick={handleUpload}
-          disabled={mutation.isPending || !file}
-        >
-          Upload file
-        </Button>
+        <div>
+          <div className="border-gray-500 border-2 p-5 mb-2 =rounded-lg flex flex-row items-center">
+            <File />
+            <p className="ml-4 mb-0 flex flex-col">
+              {file.name}
+              <sub>{filesize(file.size)}</sub>
+            </p>
+            <Button
+              variant="destructive"
+              className="flex-end ml-auto"
+              onClick={() => setFile(null)}
+            >
+              <X />
+            </Button>
+          </div>
+          <Button
+            className="mb-2 items-center justify-center w-full"
+            onClick={handleUpload}
+            disabled={mutation.isPending || !file}
+          >
+            Upload file
+          </Button>
+        </div>
       )}
 
       {uploadClicked && (
-        <div className="text-center">
+        <div className="text-center text-white">
           {mutation.isPending ? (
             <div className="rounded bg-yellow-400/50 p-2">Uploading...</div>
           ) : (

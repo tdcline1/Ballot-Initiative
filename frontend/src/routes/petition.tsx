@@ -74,7 +74,7 @@ Ensure these sections have the printed name and address of the voter.
 
       <div className="border-gray-600 border-t-2 my-5">
         <h3>Results</h3>
-        <Tabs defaultValue="datatable" className="w-[400px]">
+        <Tabs defaultValue="datatable">
           <TabsList>
             <TabsTrigger value="datatable">📊 Data Table</TabsTrigger>
             <TabsTrigger value="statistics">📈 Statistics</TabsTrigger>

@@ -84,7 +84,7 @@ const DataFrameTable = ({ data }: DataFrameTableProps) => {
 
   return (
     <div>
-      <div className="rounded-md border w-200">
+      <div className="rounded-md border grow w-full">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
