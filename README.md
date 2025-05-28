@@ -108,13 +108,22 @@ An alternate approach to get up and running is to use [Github Codespaces](https:
 
 ### Running the Application
 
-1. Start the Streamlit app:
+1. Start the FastAPI backend API:
 
    ```bash
-   uv run main.py
+   uv run fastapi dev app/api.py
    ```
 
-2. Upload your files:
+2. Start the frontend UI:
+
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+3. UI should be up and running on http://localhost:5173
+
+4. Upload your files:
    - PDF of signed petitions
    - Voter records file
    - Sample data is available in the `sample_data` folder for testing

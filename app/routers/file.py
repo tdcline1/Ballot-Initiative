@@ -9,6 +9,9 @@ from utils import logger
 
 router = APIRouter(tags=["File Upload"])
 
+if not os.path.exists("temp"):
+    os.makedirs("temp")
+    logger.info("Created temporary directory: temp")
 
 class UploadFileTypes(str, Enum):
     voter_records = "voter_records"
