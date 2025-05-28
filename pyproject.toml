@@ -1,6 +1,6 @@
 [project]
 name = "ballot-petition-signature-verifier"
-version = "0.0.9"
+version = "0.0.15"
 description = "A python package for verifying ballot petition signatures"
 readme = "README.md"
 requires-python = "~=3.12"
@@ -10,6 +10,7 @@ maintainers = [
     { name = "Andrew Shao" },
     { name = "Kurian Vithayathil" },
     { name = "Kevin Shu" },
+    { name = "Eugene Kim" },
 ]
 license = "MIT"
 dependencies = [
