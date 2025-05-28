@@ -49,7 +49,7 @@ def _create_ocr_client() -> Runnable:
         case OpenAiConfig():
             client = ChatOpenAI(
                 api_key=ocr_config.api_key,
-                temperature=0.0,
+                temperature=1,
                 openai_api_base="https://oai.helicone.ai/v1",
                 model=ocr_config.model,
             ).with_structured_output(OCRData)
