@@ -83,7 +83,7 @@ An alternate approach to get up and running is to use [Github Codespaces](https:
 
    ```bash
    git clone https://github.com/Civic-Tech-Ballot-Inititiave/Ballot-Initiative.git
-   cd ballot-initiative
+   cd Ballot-Initiative
    ```
 
    [^2]: Optionally you may want to [fork this repository](https://github.com/Civic-Tech-Ballot-Inititiave/Ballot-Initiative/fork)
@@ -98,7 +98,7 @@ An alternate approach to get up and running is to use [Github Codespaces](https:
    # On Windows:
    venv\Scripts\activate
    # On macOS/Linux:
-   source venv/bin/activate
+   source .venv/bin/activate
    ```
 
 3. Configure and save settings:
@@ -118,6 +118,7 @@ An alternate approach to get up and running is to use [Github Codespaces](https:
 
    ```bash
    cd frontend
+   npm install
    npm run dev
    ```
 
